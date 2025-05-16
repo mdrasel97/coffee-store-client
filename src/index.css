@@ -11,3 +11,7 @@
  h1, h2, button, a {
   font-family: "Rancho", cursive;
 }
+
+a.active{
+  color: #460a0a;
+}

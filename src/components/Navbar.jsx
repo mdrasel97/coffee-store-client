@@ -1,7 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import { AuthContext } from "../context/AuthContext";
+import logoImg from "../assets/more/logo1.png";
 
 const Navbar = () => {
+  // const data = useContext(AuthContext);
+  // console.log(data);
+
   const links = (
     <>
       <li>
@@ -41,13 +46,21 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <h2 className=" text-3xl font-bold">Coffee Store</h2>
+          <div className="flex items-center gap-3">
+            <img className="w-10" src={logoImg} alt="" />
+            <h2 className=" text-3xl font-bold">Coffee Store</h2>
+          </div>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
+        <div className="navbar-end space-x-3">
+          <Link to={"/signIn"} className="btn">
+            Sign In
+          </Link>
+          <Link to={"/signUp"} className="btn">
+            Sign Up
+          </Link>
         </div>
       </div>
     </nav>

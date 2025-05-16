@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from "sweetalert2";
 
 const AddNewCoffee = () => {
   const handleAddCoffee = (e) => {
@@ -8,7 +9,6 @@ const AddNewCoffee = () => {
     const newCoffee = Object.fromEntries(formData.entries());
     console.log(newCoffee);
 
-    // send coffee data to the db
     fetch("http://localhost:3000/coffees", {
       method: "POST",
       headers: {
@@ -20,6 +20,12 @@ const AddNewCoffee = () => {
       .then((data) => {
         if (data.insertedId) {
           console.log("after adding coffee to db", data);
+          Swal.fire({
+            title: "Coffee Added!",
+            text: "New coffee has been added successfully.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
         }
       });
   };
@@ -43,6 +49,7 @@ const AddNewCoffee = () => {
                 className="input border w-full"
                 placeholder="Coffee Name"
                 name="name"
+                required
               />
             </fieldset>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box p-4">
@@ -51,7 +58,8 @@ const AddNewCoffee = () => {
                 type="text"
                 className="input border w-full"
                 placeholder="Chef Name"
-                name="cher"
+                name="chef"
+                required
               />
             </fieldset>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box p-4">
@@ -61,6 +69,7 @@ const AddNewCoffee = () => {
                 className="input border w-full"
                 placeholder="Price"
                 name="price"
+                required
               />
             </fieldset>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box p-4">
@@ -70,6 +79,7 @@ const AddNewCoffee = () => {
                 className="input border w-full"
                 placeholder="Taste"
                 name="taste"
+                required
               />
             </fieldset>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box p-4">
@@ -79,6 +89,7 @@ const AddNewCoffee = () => {
                 className="input border w-full"
                 placeholder="Category Name"
                 name="category"
+                required
               />
             </fieldset>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box p-4">
@@ -88,6 +99,7 @@ const AddNewCoffee = () => {
                 className="input border w-full"
                 placeholder="Details Name"
                 name="details"
+                required
               />
             </fieldset>
           </div>
@@ -98,6 +110,7 @@ const AddNewCoffee = () => {
               className="input border w-full"
               placeholder="Photo"
               name="photo"
+              required
             />
           </fieldset>
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box p-4">

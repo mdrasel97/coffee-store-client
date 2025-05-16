@@ -1,14 +1,18 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import { Outlet } from 'react-router';
+import React from "react";
+import Navbar from "../components/Navbar";
+import { Outlet } from "react-router";
+import Footer from "../components/Footer";
 
 const Root = () => {
-    return (
-        <div>
-            <Navbar />
-            <Outlet />
-        </div>
-    );
+  return (
+    <div className="lg:container mx-auto">
+      <Navbar />
+      <div className="min-h-screen">
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Root;
