@@ -1,14 +1,16 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { Outlet } from "react-router";
+import { Outlet, useNavigation } from "react-router";
 import Footer from "../components/Footer";
+import Loading from "../components/Loading";
 
 const Root = () => {
+  const { state } = useNavigation();
   return (
     <div className="lg:container mx-auto">
       <Navbar />
       <div className="min-h-screen">
-        <Outlet />
+        {state == "loading" ? <Loading /> : <Outlet />}
       </div>
       <Footer />
     </div>

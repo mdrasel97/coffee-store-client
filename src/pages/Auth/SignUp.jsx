@@ -10,15 +10,24 @@ const SignUp = () => {
 
     const form = e.target;
     const formData = new FormData(form);
-    const { email, password, ...userProfile } = Object.fromEntries(
+    const { email, password, ...restFormData } = Object.fromEntries(
       formData.entries()
     );
+
     // console.log(email, password, userProfile);
 
     // create user in the firebase
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
+
+        const userProfile = {
+          email,
+          ...restFormData,
+          creationTime: result.user?.metadata?.creationTime,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
+
         // save profile in the db
         fetch("http://localhost:3000/users", {
           method: "POST",
@@ -34,7 +43,7 @@ const SignUp = () => {
               Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "Your work has been saved",
+                title: "Sign Up created Successfully",
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -62,7 +71,7 @@ const SignUp = () => {
           />
         </div>
         <div className="space-y-1 text-sm">
-          <label htmlFor="username" className="block dark:text-gray-600">
+          <label htmlFor="address" className="block dark:text-gray-600">
             Address
           </label>
           <input

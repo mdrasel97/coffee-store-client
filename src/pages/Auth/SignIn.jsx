@@ -1,20 +1,51 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const SignIn = () => {
+  const { signInUser } = useContext(AuthContext);
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    signInUser(email, password)
+      .then((result) => {
+        const signInInfo = {
+          email,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
+        // update last signIn to the database
+        fetch("http://localhost:3000/users", {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(signInInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log(data);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="w-full max-w-md mx-auto my-10 p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800">
       <h1 className="text-2xl font-bold text-center">Login</h1>
-      <form className="space-y-6">
+      <form onSubmit={handleSignIn} className="space-y-6">
         <div className="space-y-1 text-sm">
-          <label htmlFor="username" className="block dark:text-gray-600">
-            Username
+          <label htmlFor="email" className="block dark:text-gray-600">
+            Email
           </label>
           <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Username"
-            className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="email"
+            className="w-full border px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
           />
         </div>
         <div className="space-y-1 text-sm">
@@ -26,7 +57,7 @@ const SignIn = () => {
             name="password"
             id="password"
             placeholder="Password"
-            className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
+            className="w-full border px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
           />
           <div className="flex justify-end text-xs dark:text-gray-600">
             <a rel="noopener noreferrer" href="#">

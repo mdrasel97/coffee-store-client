@@ -7,6 +7,8 @@ import Error from "../components/Error";
 import CoffeeDetails from "../pages/CoffeeDetails";
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
+import Users from "../pages/Users";
+import Loading from "../components/Loading";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +19,7 @@ export const router = createBrowserRouter([
         path: "/",
         Component: Home,
         loader: () => fetch("http://localhost:3000/coffees"),
+        hydrateFallbackElement: <Loading />,
       },
       {
         path: "addNewCoffee",
@@ -27,12 +30,14 @@ export const router = createBrowserRouter([
         Component: CoffeeDetails,
         loader: ({ params }) =>
           fetch(`http://localhost:3000/coffees/${params.id}`),
+        hydrateFallbackElement: <Loading />,
       },
       {
         path: "updateCoffee/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:3000/coffees/${params.id}`),
         Component: UpdateCoffee,
+        hydrateFallbackElement: <Loading />,
       },
       {
         path: "signIn",
@@ -41,6 +46,12 @@ export const router = createBrowserRouter([
       {
         path: "signUp",
         Component: SignUp,
+      },
+      {
+        path: "users",
+        Component: Users,
+        loader: () => fetch("http://localhost:3000/users"),
+        hydrateFallbackElement: <Loading />,
       },
     ],
   },
